@@ -1,0 +1,8 @@
+{
+    "name": "votit",
+    "version": 2,
+    "env": {
+      "MONGODB_URI": "@my-mongodb-uri",
+      "MONGODB_DB": "@my-mongodb-db"
+    }
+}
