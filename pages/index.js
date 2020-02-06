@@ -1,19 +1,30 @@
 import useSWR from 'swr';
+import Button from '@material-ui/core/Button';
+import Link from 'next/link'
 
 function fetcher(url) {
   return fetch(url).then(r => r.json());
 }
 
-const Answers = ({answers}) => (
+const Answers = ({question}) => (
   <div>
-  {answers?.map(
+  {question?.answers.map(
     answer => (
-      <div className="answer" key={answer.answer_string}>{answer.answer_string}</div>
+      <div className="answer" key={answer.answer_string}>
+        {answer.answer_string} : {answer.result}
+        <Link href={`/result?question=${question.question}&answer=${answer.answer_string}`} as={"/result"}>
+          <Button variant="outlined" color="primary">
+            Vote!
+          </Button>
+        </Link>
+      </div>
     )
   )
 }
 </div>
 );
+
+
 
 const Questions = ({questions}) => (
   <div>
@@ -21,7 +32,7 @@ const Questions = ({questions}) => (
     question => (
       <div className="question" key={question.question}>
         {question.question}
-        <Answers answers={question.answers} />
+        <Answers question={question}/>
       </div>
     )
   )
@@ -31,11 +42,13 @@ const Questions = ({questions}) => (
 
 
 export default function Index() {
+  
   const { data, error } = useSWR('/api/users', fetcher);
-
+  console.log(data);
+  
   return (
     <main className="center">
-        <Questions questions={data?.questions} />
+        <Questions questions={data?.questions}/>
     </main>
   );
 }
