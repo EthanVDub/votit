@@ -11,7 +11,7 @@ const Answers = ({question}) => (
   {question?.answers.map(
     answer => (
       <div className="answer" key={answer.answer_string}>
-        {answer.answer_string} : {answer.result}
+        {answer.answer_string}
         <Link href={`/result?question=${question.question}&answer=${answer.answer_string}`} as={"/result"}>
           <Button variant="outlined" color="primary">
             Vote!
@@ -23,8 +23,6 @@ const Answers = ({question}) => (
 }
 </div>
 );
-
-
 
 const Questions = ({questions}) => (
   <div>
@@ -43,7 +41,7 @@ const Questions = ({questions}) => (
 
 export default function Index() {
   
-  const { data, error } = useSWR('/api/users', fetcher);
+  const { data, error } = useSWR('/api/questions', fetcher);
   
   return (
     <main className="center">

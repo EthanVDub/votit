@@ -1,5 +1,6 @@
 import useSWR, {mutate} from 'swr';
 import { useRouter } from 'next/router';
+import PieChart from 'react-minimal-pie-chart';
 
 function fetcher(url) {
     return fetch(url).then(r => r.json());
@@ -18,11 +19,12 @@ const Answers = ({question}) => (
   </div>
   );
 
+
 export default function Result() {
     const router = useRouter();
     const { data, error } = useSWR(`/api/increment?question=${router.query.question}&answer=${router.query.answer}`, fetcher);
     console.log(data)
-    let response = data?.result.question;
+    let response = data?.result?.question;
     
 
     if(!response) response = "Loading";
@@ -30,7 +32,6 @@ export default function Result() {
 
     return (
       <main className="center">
-          Result Page
           {router.query.question}
           <Answers question={data?.result} />
       </main>
