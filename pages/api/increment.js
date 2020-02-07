@@ -32,18 +32,21 @@ async function connectToDatabase(uri) {
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
-  // Get a database connection, cached or otherwise,
-  // using the connection string environment variable as the argument
+  answer = req.query.answer;
+    question = req.query.question;
   const db = await connectToDatabase(process.env.MONGODB_URI)
 
   // Select the "users" collection from the database
   const collection = await db.collection('questions')
 
-  collection.updateOne(
-      { "question" :"Do you like the current president?", "answers.answer_string" : "Yes"},
+  await collection.updateOne(
+      { "question" : req.query.question, "answers.answer_string" : req.query.answer},
 
       { $inc: {"answers.$.result" : 1}}
   )
 
-  res.status(200).json({ })
+  const result = await collection.findOne({"question" : req.query.question})
+
+
+  res.status(200).json({result})
 }

@@ -44,7 +44,6 @@ const Questions = ({questions}) => (
 export default function Index() {
   
   const { data, error } = useSWR('/api/users', fetcher);
-  console.log(data);
   
   return (
     <main className="center">
