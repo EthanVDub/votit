@@ -1,6 +1,5 @@
 import useSWR, {mutate} from 'swr';
 import { useRouter } from 'next/router';
-import PieChart from 'react-minimal-pie-chart';
 
 function fetcher(url) {
     return fetch(url).then(r => r.json());
