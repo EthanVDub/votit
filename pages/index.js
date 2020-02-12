@@ -1,6 +1,17 @@
 import useSWR from 'swr';
-import Button from '@material-ui/core/Button';
-import Link from 'next/link'
+//import Button from '@material-ui/core/Button';
+import Link from 'next/link';
+import styled from 'styled-components';
+
+
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid #cc5474;
+  color: #cc5474;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
 
 function fetcher(url) {
   return fetch(url).then(r => r.json());
@@ -24,20 +35,26 @@ const Answers = ({question}) => (
 </div>
 );
 
+const StyledAnswers = styled(Answers)`
+  display: flex;
+  flexDirection: row;
+  flex-grow: 1;
+  align-items: center;
+`;
+
 const Questions = ({questions}) => (
   <div>
   {questions?.map(
     question => (
       <div className="question" key={question.question}>
         {question.question}
-        <Answers question={question}/>
+        <StyledAnswers question={question}/>
       </div>
     )
   )
 }
 </div>
 );
-
 
 export default function Index() {
   
